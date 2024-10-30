@@ -1,0 +1,13 @@
+.carousel-container {
+    display: flex;
+    flex-wrap: nowrap; /* Ensure that items do not wrap to the next line */
+    gap: 10px; /* Space between the cards */
+    overflow-x: auto; /* Horizontal scrolling */
+    scroll-behavior: smooth; /* Smooth scrolling */
+    padding-bottom: 20px; /* Optional: To give some padding below */
+  }
+  
+  .carousel-container::-webkit-scrollbar {
+    display: none; /* Hide the scrollbar */
+  }
+  
