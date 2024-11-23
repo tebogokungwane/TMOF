@@ -3,7 +3,7 @@ import backend from "./backend.png";
 import creator from "./creator.png";
 import mobile from "./mobile.png";
 import web from "./web.png";
-import github from "./github.png";
+import github from "./TMOF.jpg";
 import menu from "./menu.svg";
 import close from "./close.svg";
 
@@ -28,10 +28,17 @@ import tesla from "./company/tesla.png";
 import carrent from "./carrent.png";
 import jobit from "./jobit.png";
 import tripguide from "./tripguide.png";
-import same from "./sameDay.png";
-import normal from "./normal.png";
-import errand from "./errand.png"
-import normalD from "./normal_delivery.jpeg"
+import normalD from "./service1.jpg"
+
+
+
+// import same from "./sameDay.png";
+// import normal from "./normal.png";
+// import errand from "./errand.png"
+
+import same  from   "./service1.jpg";
+import normal from  "./service7.jpg"
+import errand from  "./service5.jpg"
 
 
 
@@ -64,8 +71,15 @@ export {
   carrent,
   jobit,
   tripguide,
+  normalD,
+
+
   same,
   normal,
   errand,
-  normalD
+
+  // service1,
+  // service3,
+  // service4
+
 };

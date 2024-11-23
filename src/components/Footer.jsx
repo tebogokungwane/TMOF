@@ -3,7 +3,7 @@ import { FaInstagram, FaFacebook, FaTiktok, FaWhatsapp } from 'react-icons/fa';
 import styled from 'styled-components';
 
 const FooterContainer = styled.footer`
-  background-color: ${({ theme }) => theme.footer_background};
+  background-color: #fcd403; /* Updated to black */
   color: ${({ theme }) => theme.text_primary};
   padding: 20px;
   text-align: center;
@@ -59,13 +59,13 @@ const Footer = () => {
           <FaWhatsapp />
         </SocialLink>
       </SocialLinks>
-      <LinksContainer>
+      {/* <LinksContainer>
         <Link href="/about" target="_blank">About Us</Link>
         <Link href="/services" target="_blank">Services</Link>
         <Link href="/privacy-policy" target="_blank">Privacy Policy</Link>
         <Link href="/terms-of-service" target="_blank">Terms of Service</Link>
         <Link href="/contact" target="_blank">Contact Us</Link>
-      </LinksContainer>
+      </LinksContainer> */}
       <Copyright>
         © 2024 TMOF. All rights reserved.
       </Copyright>

@@ -26,8 +26,11 @@ import {
   same,
   normal,
   errand,
-  normalD
+  normalD,
 } from "../assets";
+
+// import tman from  "../assets/Tman.jpg"
+
 
 export const navLinks = [
 
@@ -136,18 +139,7 @@ const projects = [
     name: "SAME-DAY DELIVERY",
     description: "Urgent documents or Parcels... We've got you!",
     tags: [
-      {
-        name: "express",
-        color: "blue-text-gradient",
-      },
-      {
-        name: "mongodb",
-        color: "green-text-gradient",
-      },
-      {
-        name: "nodejs",
-        color: "yellow-text-gradient",
-      },
+  
     ],
     image: normal,
     source_code_link: "https://github.com/",
@@ -156,18 +148,6 @@ const projects = [
     name: "NORMAL DELIVERY",
     description: "3 day delivery for non-urgent Parcels",
     tags: [
-      {
-        name: "react",
-        color: "blue-text-gradient",
-      },
-      {
-        name: "firebase",
-        color: "orange-text-gradient",
-      },
-      {
-        name: "tailwind",
-        color: "pink-text-gradient",
-      },
     ],
     image: normalD,
     source_code_link: "https://github.com/",
@@ -176,18 +156,7 @@ const projects = [
     name: "SWIFT ERRAND",
     description: "Let us run your errands",
     tags: [
-      {
-        name: "nextjs",
-        color: "blue-text-gradient",
-      },
-      {
-        name: "supabase",
-        color: "green-text-gradient",
-      },
-      {
-        name: "tailwind",
-        color: "pink-text-gradient",
-      },
+   
     ],
     image: errand,
     source_code_link: "https://github.com/",

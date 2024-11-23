@@ -1,234 +1,320 @@
+import React, { useState, useEffect, useRef } from "react";
+import styled, { keyframes } from "styled-components";
+import Modal from "react-modal";
+import { FaWhatsapp, FaPhone, FaTruck, FaTimes } from "react-icons/fa";
+import ProfileImg from "./HeroBgAnimation/Tshidiso.jpg";
+import emailjs from "@emailjs/browser";
 
-//import { styles } from "./styles";
-// import styles from "../styles";
-import styled from "styled-components";
-//import { Bio } from "../../data/constants";
-import { Bio } from "./data/constants";
-import Typewriter from "typewriter-effect";
-//import HeroImg from "../../images/HeroImage.jpg";
-import HeroImg from "./HeroBgAnimation/Tshidiso.jpg";
-//import HeroBgAnimation from "../HeroBgAnimation";
-// import HeroBgAnimation from "./HeroBgAnimation"
-import { Tilt } from "react-tilt";
-// import { motion } from "framer-motion";
-// import {
-//   headContainerAnimation,
-//   headContentAnimation,
-//   headTextAnimation,
-// } from "./utils/motion";
+// Animations
+const fadeIn = keyframes`
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+`;
 
+const fadeOut = keyframes`
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0; }
+`;
 
-import { FaShoppingCart } from "react-icons/fa"; // Importing icon for "Place Order" button
+// Styled Components
+const HomeContainer = styled.div`
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background: #fcd403;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
+const Header = styled.h1`
+  position: absolute;
+  top: 8%;
+  font-size: 2.5rem;
+  margin: 0;
+  font-weight: bold;
+  color: #000;
+  animation: ${fadeIn} 1.5s ease-out;
+`;
 
-const HeroContainer = styled.div`
+const SubHeader = styled.h2`
+  position: absolute;
+  top: 20%;
+  font-size: 1.2rem;
+  margin: 10px 0;
+  color: #000;
+  animation: ${fadeIn} 1.5s ease-out 0.5s;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
+const BackgroundText = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 4rem;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.1);
+  text-align: center;
+`;
+
+const ProfileSection = styled.div`
+  margin-top: 170px;
+  animation: ${fadeIn} 1.5s ease-out;
+
+  img {
+    width: 100%;
+    max-width: 300px;
+    border: 5px solid #fcd403;
+    border-radius: 15px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+  }
+`;
+
+const ContactContainer = styled.div`
+  margin-top: 20px;
+  animation: ${fadeIn} 1.5s ease-out;
+`;
+
+const ContactInfo = styled.div`
   display: flex;
   justify-content: center;
-  position: relative;
-  padding: 100px 300px; 
-  z-index: 1;
-
-  @media (max-width: 960px) {
-  padding: 100px 300px; 
-  }
-
-  @media (max-width: 640px) {
-    padding: 32px 16px;
-  }
-
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 70% 95%, 0 100%);
-`;
-const HeroInnerContainer = styled.div`
-  position: relative;
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-  width: 100%;
-  max-width: 1100px;
-  padding: 100px 30px; 
+  margin: 10px 0;
+  font-size: 1.2rem;
 
-
-  @media (max-width: 960px) {
-    flex-direction: column;
-      padding: 100px 50px; 
-
-  }
-`;
-const HeroLeftContainer = styled.div`
-  width: 100%;
-  order: 2;
-  padding: 90px 30px; 
-  margin-top: 20px; /* Added margin to move image down */
-  
-  @media (max-width: 960px) {
-    order: 2;
-    margin-bottom: 30px;
-    display: flex;
-    gap: 6px;
-    flex-direction: column;
-    align-items: center;
-    padding: 90px 30px; 
-
-    
-  }
-`;
-const HeroRightContainer = styled.div`
-  width: 100%;
-  order: 2;
-  display: flex;
-  justify-content: end;
-  @media (max-width: 960px) {
-    order: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-contents: center;
-    margin-bottom: 50px;
-  }
-
-  @media (max-width: 640px) {
-    margin-bottom: 30px;
+  svg {
+    margin-right: 10px;
+    color: #25d366;
   }
 `;
 
-const Title = styled.div`
-  font-weight: 700;
-  font-size: 40px;
-  color: ${({ theme }) => theme.text_primary};
-  line-height: 68px;
-  margin-bottom: 20px; /* Added margin to create spacing below title */
-
-  @media (max-width: 960px) {
-    text-align: center;
-    padding: -50px -50px; 
-
-  }
-
-  @media (max-width: 960px) {
-    font-size: 40px;
-    line-height: 48px;
-    margin-bottom: 8px;
-    padding: -50px -50px; 
-
-  }
-`;
-
-
-const TextLoop = styled.div`
-  font-weight: 500;
-  font-size: 22px;
-  display: flex;
-  gap: 12px;
-  color: ${({ theme }) => theme.text_primary};
-  line-height: 68px;
-  white-space: nowrap; /* Prevents text from wrapping */
-
-  @media (max-width: 960px) {
-    text-align: center;
-  }
-
-  @media (max-width: 960px) {
-    font-size: 15px;
-    line-height: 48px;
-    margin-bottom: 16px;
-  }
-`;
-
-
-const Span = styled.div`
-  cursor: pointer;
-  color: ${({ theme }) => theme.primary};
-`;
-
-
-const Img = styled.img`
-   width: 80%;
-  max-width: 320px;
-  aspect-ratio: 1; /* Makes the container square */
-  border-radius: 50%; /* Makes the container circular */
-  overflow: hidden; /* Ensures image is cropped within the circle */
-  // border: 3px solid ${({ theme }) => theme.primary};
-  opacity: 0.9;
-    margin-top: 20px; /* Added margin to move image down */
-
-  @media (max-width: 640px) {
-    max-width: 280px;
-  }
-`;
-
-
-const ResumeButton = styled.a`
-    display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  width: 95%;
-  max-width: 300px;
-  padding: 16px 0;
-  background: transparent; /* Made button background transparent */
-  border: 2px solid ${({ theme }) => theme.primary}; /* Added border */
+const OrderButton = styled.button`
+  margin-top: 10px;
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.4);
   border-radius: 50px;
-  font-weight: 600;
-  font-size: 20px;
-  color: ${({ theme }) => theme.primary};
-  transition: all 0.4s ease-in-out;
-    margin-top: 24px; /* Added margin to move button down */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 
   &:hover {
-    transform: scale(1.05);
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
-  }
-
-  @media (max-width: 640px) {
-    padding: 12px 0;
-    font-size: 18px;
-  }
-
-  /* Adding icon to the button */
-  & > svg {
-    margin-right: 8px;
+    background: rgba(255, 255, 255, 0.4);
   }
 `;
 
+const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
-const Hero = () => {
+const ModalContent = styled.div`
+  background: #e3e1af; /* Cream white */
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 500px;
+  padding: 20px;
+  position: relative;
+  animation: ${(props) => (props.isClosing ? fadeOut : fadeIn)} 0.3s ease-out;
+
+  h3 {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #000;
+  }
+
+  .close-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5rem;
+    color: #000;
+    cursor: pointer;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    input,
+    select {
+      padding: 12px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      background: #fcd403; /* Same as Home Background */
+      color: #000;
+    }
+  }
+`;
+
+const Home = () => {
+  const formRef = useRef();
+  const [showContent, setShowContent] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    mobile: "",
+    pickupAddress: "",
+    dropAddress: "",
+    deliveryMethod: "same-day", // Default option
+  });
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowContent(true), 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    Modal.setAppElement("#root");
+  }, []);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    alert("Form submitted: " + JSON.stringify(form, null, 2));
+    closeModal();
+  };
+
+  const toggleModal = () => {
+    setIsModalOpen(true);
+    setIsClosing(false);
+  };
+
+  const closeModal = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsModalOpen(false);
+    }, 300);
+  };
+
   return (
+    <HomeContainer>
+      {!showContent && (
+        <BackgroundText>Let us DELIVER your URGENT parcels</BackgroundText>
+      )}
+      <Header>SAME DAY DELIVERY</Header>
+      <SubHeader>We deliver parcels with speed and care</SubHeader>
 
-    <HeroContainer>
-      <HeroInnerContainer>
-        <HeroLeftContainer>
-          <Title>
-            Hi, I am <br /> {Bio.name}
-          </Title>
-          <TextLoop>
-            I provide
-            <Span>
-              <Typewriter
-                options={{
-                  strings: Bio.roles,
-                  autoStart: true,
-                  loop: true,
-                }}
-              />
-            </Span>
-          </TextLoop>
-          <ResumeButton href={Bio.resume} target="_blank">
-            Place Order
-          </ResumeButton>
+      {showContent && (
+        <>
+          <ProfileSection>
+            <img src={ProfileImg} alt="Profile" />
+          </ProfileSection>
 
-        </HeroLeftContainer>
-        <HeroRightContainer>
-          <Tilt>
-            <Img src={HeroImg} alt="Rishav Chanda" />
-          </Tilt>
+          <ContactContainer>
+            <ContactInfo>
+              <FaWhatsapp />
+              079 266 9298
+            </ContactInfo>
+            <ContactInfo>
+              <FaPhone />
+              010 970 1740
+            </ContactInfo>
+          </ContactContainer>
 
-        </HeroRightContainer>
+          <OrderButton onClick={toggleModal}>
+            <FaTruck />
+            Place an Order
+          </OrderButton>
 
-      </HeroInnerContainer>
-    </HeroContainer>
-
-
+          {isModalOpen && (
+            <ModalOverlay>
+              <ModalContent isClosing={isClosing}>
+                <FaTimes className="close-icon" onClick={closeModal} />
+                <h3>Place Your Order</h3>
+                <form ref={formRef} onSubmit={handleSubmit}>
+                  <input
+                    type="text"
+                    name="name"
+                    value={form.name}
+                    onChange={handleChange}
+                    placeholder="Your Name"
+                    required
+                  />
+                  <input
+                    type="email"
+                    name="email"
+                    value={form.email}
+                    onChange={handleChange}
+                    placeholder="Your Email"
+                    required
+                  />
+                  <input
+                    type="text"
+                    name="mobile"
+                    value={form.mobile}
+                    onChange={handleChange}
+                    placeholder="Your Mobile Number"
+                    required
+                  />
+                  <input
+                    type="text"
+                    name="pickupAddress"
+                    value={form.pickupAddress}
+                    onChange={handleChange}
+                    placeholder="Pick-up Address"
+                    required
+                  />
+                  <input
+                    type="text"
+                    name="dropAddress"
+                    value={form.dropAddress}
+                    onChange={handleChange}
+                    placeholder="Drop Address"
+                    required
+                  />
+                  <select
+                    name="deliveryMethod"
+                    value={form.deliveryMethod}
+                    onChange={handleChange}
+                    required
+                  >
+                    <option value="same-day">Same Day Delivery</option>
+                    <option value="normal">Normal Delivery</option>
+                    <option value="swift-errand">Swift Errand</option>
+                  </select>
+                  <OrderButton type="submit">
+                    <FaTruck /> Submit
+                  </OrderButton>
+                </form>
+              </ModalContent>
+            </ModalOverlay>
+          )}
+        </>
+      )}
+    </HomeContainer>
   );
 };
-export default Hero;
 
+export default Home;
