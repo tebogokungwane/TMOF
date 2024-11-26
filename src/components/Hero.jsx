@@ -4,6 +4,7 @@ import Modal from "react-modal";
 import { FaWhatsapp, FaPhone, FaTruck, FaTimes } from "react-icons/fa";
 import ProfileImg from "./HeroBgAnimation/Tshidiso.jpg";
 import emailjs from "@emailjs/browser";
+import PlacesAutocomplete from "react-places-autocomplete";
 
 // Animations
 const fadeIn = keyframes`
@@ -162,12 +163,23 @@ const ModalContent = styled.div`
 
     input,
     select {
-      padding: 12px;
-      border-radius: 5px;
+      padding: 15px 30px; /* Match button padding */
+      border-radius: 50px; /* Rounded corners like the button */
       border: 1px solid #ccc;
       font-size: 1rem;
       background: #fcd403; /* Same as Home Background */
       color: #000;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+      outline: none;
+
+      &:focus {
+        border: 1px solid #000; /* Add focus border */
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.3); /* Glow effect on focus */
+      }
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.8); /* Slightly lighter hover effect */
+      }
     }
   }
 `;
@@ -183,7 +195,6 @@ const Home = () => {
     mobile: "",
     pickupAddress: "",
     dropAddress: "",
-    deliveryMethod: "same-day", // Default option
   });
 
   useEffect(() => {
@@ -294,16 +305,6 @@ const Home = () => {
                     placeholder="Drop Address"
                     required
                   />
-                  <select
-                    name="deliveryMethod"
-                    value={form.deliveryMethod}
-                    onChange={handleChange}
-                    required
-                  >
-                    <option value="same-day">Same Day Delivery</option>
-                    <option value="normal">Normal Delivery</option>
-                    <option value="swift-errand">Swift Errand</option>
-                  </select>
                   <OrderButton type="submit">
                     <FaTruck /> Submit
                   </OrderButton>

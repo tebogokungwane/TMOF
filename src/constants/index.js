@@ -28,27 +28,38 @@ import {
   errand,
   normalD,
 } from "../assets";
+import { FaHome, FaInfo, FaServicestack, FaBriefcase } from "react-icons/fa";
+import React from "react";
 
-// import tman from  "../assets/Tman.jpg"
 
+// Function-based icons to avoid JSX syntax in plain JavaScript
+const FaHomeIcon = () => React.createElement(FaHome, { className: "text-black mr-2" });
+const FaServicestackIcon = () =>
+  React.createElement(FaServicestack, { className: "text-black mr-2" });
+const FaBriefcaseIcon = () =>
+  React.createElement(FaBriefcase, { className: "text-black mr-2" });
+const FaInfoIcon = () => React.createElement(FaInfo, { className: "text-black mr-2" });
 
 export const navLinks = [
-
   {
-    id: "services",
-    title: "Service",
+    id: "home",
+    title: "Home",
+    icon: FaHomeIcon,
   },
   {
-    id: "about",
-    title: "About",
+    id: "services",
+    title: "Our Service",
+    icon: FaServicestackIcon,
   },
   {
     id: "work",
-    title: "Work",
+    title: "Our Work",
+    icon: FaBriefcaseIcon,
   },
   {
-    id: "contact",
-    title: "Contact",
+    id: "about",
+    title: "About Us",
+    icon: FaInfoIcon,
   },
 ];
 
@@ -68,20 +79,16 @@ const services = [
   {
     title: "Oracle Java EE Web Component",
     icon: creator,
-  }
-  ,
+  },
   {
     title: "Oracle Java SE 5 Programming",
     icon: creator,
-  }
-  ,
+  },
   {
     title: "Oracle Java SE  6 Programming",
     icon: creator,
-  }
+  },
 ];
-
-
 
 const experiences = [
   {
@@ -90,9 +97,9 @@ const experiences = [
     icon: starbucks,
     iconBg: "#383E56",
     points: [
-      "TMOF COURIERS, stablished by Tshidiso Mofokeng",
+      "TMOF COURIERS, established by Tshidiso Mofokeng",
       "Reputable courier company",
-      "Specialising in efficient door-to-door services.",
+      "Specializing in efficient door-to-door services.",
     ],
   },
   {
@@ -101,10 +108,9 @@ const experiences = [
     icon: tesla,
     iconBg: "#E6DEDD",
     points: [
-      "Legistimate registered and licensed",
+      "Legitimate registered and licensed",
       "Ensure security",
-      "Realible delivery",
-
+      "Reliable delivery",
     ],
   },
   {
@@ -113,8 +119,8 @@ const experiences = [
     icon: shopify,
     iconBg: "#383E56",
     points: [
-      "The commitmnent to customer satisfaction",
-      "TMOF Courier a truested choince",
+      "The commitment to customer satisfaction",
+      "TMOF Courier a trusted choice",
       "Seamless and timely courier solutions",
     ],
   },
@@ -123,50 +129,32 @@ const experiences = [
     company_name: "Meta",
     icon: meta,
     iconBg: "#E6DEDD",
-    points: [
-      "Fast Delivery",
-      "Arrives safley",
-      "Handled with care"
-
-    ],
+    points: ["Fast Delivery", "Arrives safely", "Handled with care"],
   },
 ];
-
-
 
 const projects = [
   {
     name: "SAME-DAY DELIVERY",
     description: "Urgent documents or Parcels... We've got you!",
-    tags: [
-  
-    ],
+    tags: [],
     image: normal,
     source_code_link: "https://github.com/",
   },
   {
     name: "NORMAL DELIVERY",
     description: "3 day delivery for non-urgent Parcels",
-    tags: [
-    ],
+    tags: [],
     image: normalD,
     source_code_link: "https://github.com/",
   },
   {
     name: "SWIFT ERRAND",
     description: "Let us run your errands",
-    tags: [
-   
-    ],
+    tags: [],
     image: errand,
     source_code_link: "https://github.com/",
   },
 ];
 
 export { services, experiences, projects };
-
-
-
-
-
-
