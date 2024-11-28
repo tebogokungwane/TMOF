@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
 import Modal from "react-modal";
 import { FaWhatsapp, FaPhone, FaTruck, FaTimes } from "react-icons/fa";
-import emailjs from "@emailjs/browser";
 import ProfileImg from "./HeroBgAnimation/Tshidiso.jpg";
 
 // Animations
@@ -27,11 +26,12 @@ const HomeContainer = styled.div`
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  position: relative;
 `;
 
 const Header = styled.h1`
   position: absolute;
-  top: 10%;
+  top: 10px; /* Keep the header at the top of the screen */
   font-size: 2.5rem;
   font-weight: bold;
   color: #000;
@@ -40,7 +40,7 @@ const Header = styled.h1`
 
 const SubHeader = styled.h2`
   position: absolute;
-  top: 20%;
+  top: 70px; /* Adjusted spacing below the main header */
   font-size: 1.2rem;
   color: #000;
   animation: ${fadeIn} 1.5s ease-out 0.5s;
@@ -62,7 +62,7 @@ const BackgroundText = styled.div`
 `;
 
 const ProfileImage = styled.div`
-  margin-top: 100px;
+  margin-top: 120px;
   animation: ${fadeIn} 1.5s ease-out;
 
   img {
@@ -216,11 +216,12 @@ const Home = () => {
 
   return (
     <HomeContainer>
+      <Header>SAME DAY DELIVERY</Header>
+      <SubHeader>We deliver parcels with speed and care</SubHeader>
+
       {!showContent && (
         <BackgroundText>Let us DELIVER your URGENT parcels</BackgroundText>
       )}
-      <Header>SAME DAY DELIVERY</Header>
-      <SubHeader>We deliver parcels with speed and care</SubHeader>
 
       {showContent && (
         <>
