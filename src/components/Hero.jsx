@@ -96,7 +96,7 @@ const ContactSection = styled.div`
 `;
 
 const OrderButton = styled.button`
-  margin-top: 10px;
+  margin-top: 60px;
   padding: 15px 30px;
   font-size: 1.2rem;
   color: #fff;
@@ -233,14 +233,14 @@ const Home = () => {
             <img src={ProfileImg} alt="Profile" />
           </ProfileImage>
 
-          <ContactSection>
+          {/* <ContactSection>
             <div>
               <FaWhatsapp /> 079 266 9298
             </div>
             <div>
               <FaPhone /> 010 970 1740
             </div>
-          </ContactSection>
+          </ContactSection> */}
 
           <OrderButton onClick={toggleModal}>
             <FaTruck /> Place an Order
