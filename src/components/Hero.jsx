@@ -24,31 +24,35 @@ const HomeContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   overflow: hidden;
   position: relative;
 `;
 
 const Header = styled.h1`
-  position: absolute;
-  top: 10px; /* Keep the header at the top of the screen */
-  font-size: 2.5rem;
+  font-size: 2.5rem; /* Adjust font size as needed */
   font-weight: bold;
-  color: #000;
+  color: #000; /* Black color for the text */
+  text-transform: uppercase; /* Convert text to uppercase */
+  margin-top: 80px; /* Adjust the margin for spacing */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Optional shadow effect */
   animation: ${fadeIn} 1.5s ease-out;
+
+  @media (max-width: 768px) {
+    font-size: 1.8rem; /* Adjust font size for smaller screens */
+  }
 `;
 
 const SubHeader = styled.h2`
-  position: absolute;
-  top: 70px; /* Adjusted spacing below the main header */
-  font-size: 1.2rem;
-  color: #000;
+  font-size: 1.2rem; /* Optional: Keep the subheading in sync */
+  color: #666; /* Lighter color for a subtle contrast */
   animation: ${fadeIn} 1.5s ease-out 0.5s;
 
   @media (max-width: 768px) {
-    display: none;
+    font-size: 1rem;
   }
 `;
+
 
 const BackgroundText = styled.div`
   position: absolute;
@@ -62,7 +66,7 @@ const BackgroundText = styled.div`
 `;
 
 const ProfileImage = styled.div`
-  margin-top: 120px;
+  margin-top: 20px;
   animation: ${fadeIn} 1.5s ease-out;
 
   img {
