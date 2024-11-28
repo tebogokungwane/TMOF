@@ -2,41 +2,37 @@ import React, { useState, useEffect, useRef } from "react";
 import styled, { keyframes } from "styled-components";
 import Modal from "react-modal";
 import { FaWhatsapp, FaPhone, FaTruck, FaTimes } from "react-icons/fa";
-import ProfileImg from "./HeroBgAnimation/Tshidiso.jpg";
 import emailjs from "@emailjs/browser";
-import PlacesAutocomplete from "react-places-autocomplete";
+import ProfileImg from "./HeroBgAnimation/Tshidiso.jpg";
 
 // Animations
 const fadeIn = keyframes`
-  0% { opacity: 0; transform: translateY(20px); }
-  100% { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 `;
 
-const fadeOut = keyframes`
-  0% { transform: scale(1); opacity: 1; }
-  100% { transform: scale(0.9); opacity: 0; }
+const scaleOut = keyframes`
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(0.9); }
 `;
 
 // Styled Components
 const HomeContainer = styled.div`
+  background: #fcd403;
+  height: 100vh;
   font-family: Arial, sans-serif;
   text-align: center;
-  background: #fcd403;
-  padding: 20px;
-  position: relative;
-  overflow: hidden;
-  height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  overflow: hidden;
 `;
 
 const Header = styled.h1`
   position: absolute;
-  top: 8%;
+  top: 10%;
   font-size: 2.5rem;
-  margin: 0;
   font-weight: bold;
   color: #000;
   animation: ${fadeIn} 1.5s ease-out;
@@ -46,7 +42,6 @@ const SubHeader = styled.h2`
   position: absolute;
   top: 20%;
   font-size: 1.2rem;
-  margin: 10px 0;
   color: #000;
   animation: ${fadeIn} 1.5s ease-out 0.5s;
 
@@ -66,8 +61,8 @@ const BackgroundText = styled.div`
   text-align: center;
 `;
 
-const ProfileSection = styled.div`
-  margin-top: 170px;
+const ProfileImage = styled.div`
+  margin-top: 100px;
   animation: ${fadeIn} 1.5s ease-out;
 
   img {
@@ -79,21 +74,20 @@ const ProfileSection = styled.div`
   }
 `;
 
-const ContactContainer = styled.div`
+const ContactSection = styled.div`
   margin-top: 20px;
   animation: ${fadeIn} 1.5s ease-out;
-`;
 
-const ContactInfo = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 10px 0;
-  font-size: 1.2rem;
+  div {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    font-size: 1.2rem;
 
-  svg {
-    margin-right: 10px;
-    color: #25d366;
+    svg {
+      margin-right: 10px;
+      color: #25d366;
+    }
   }
 `;
 
@@ -131,19 +125,18 @@ const ModalOverlay = styled.div`
 `;
 
 const ModalContent = styled.div`
-  background: #e3e1af; /* Cream white */
+  background: #e3e1af;
   border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   width: 90%;
   max-width: 500px;
   padding: 20px;
   position: relative;
-  animation: ${(props) => (props.isClosing ? fadeOut : fadeIn)} 0.3s ease-out;
+  animation: ${(props) => (props.isClosing ? scaleOut : fadeIn)} 0.3s ease-out;
 
   h3 {
     text-align: center;
-    font-size: 1.5rem;
     margin-bottom: 20px;
+    font-size: 1.5rem;
     color: #000;
   }
 
@@ -161,31 +154,25 @@ const ModalContent = styled.div`
     flex-direction: column;
     gap: 15px;
 
-    input,
-    select {
-      padding: 15px 30px; /* Match button padding */
-      border-radius: 50px; /* Rounded corners like the button */
+    input {
+      padding: 15px;
       border: 1px solid #ccc;
+      border-radius: 50px;
       font-size: 1rem;
-      background: #fcd403; /* Same as Home Background */
-      color: #000;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+      background: #fcd403;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
       outline: none;
 
       &:focus {
-        border: 1px solid #000; /* Add focus border */
-        box-shadow: 0 0 8px rgba(0, 0, 0, 0.3); /* Glow effect on focus */
-      }
-
-      &:hover {
-        background: rgba(255, 255, 255, 0.8); /* Slightly lighter hover effect */
+        border-color: #000;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
       }
     }
   }
 `;
 
+// Component
 const Home = () => {
-  const formRef = useRef();
   const [showContent, setShowContent] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
@@ -198,6 +185,7 @@ const Home = () => {
   });
 
   useEffect(() => {
+    // Delay showing main content
     const timer = setTimeout(() => setShowContent(true), 3000);
     return () => clearTimeout(timer);
   }, []);
@@ -213,19 +201,16 @@ const Home = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("Form submitted: " + JSON.stringify(form, null, 2));
+    console.log("Form submitted:", form);
     closeModal();
   };
 
-  const toggleModal = () => {
-    setIsModalOpen(true);
-    setIsClosing(false);
-  };
-
+  const toggleModal = () => setIsModalOpen(true);
   const closeModal = () => {
     setIsClosing(true);
     setTimeout(() => {
       setIsModalOpen(false);
+      setIsClosing(false);
     }, 300);
   };
 
@@ -239,24 +224,21 @@ const Home = () => {
 
       {showContent && (
         <>
-          <ProfileSection>
+          <ProfileImage>
             <img src={ProfileImg} alt="Profile" />
-          </ProfileSection>
+          </ProfileImage>
 
-          <ContactContainer>
-            <ContactInfo>
-              <FaWhatsapp />
-              079 266 9298
-            </ContactInfo>
-            <ContactInfo>
-              <FaPhone />
-              010 970 1740
-            </ContactInfo>
-          </ContactContainer>
+          <ContactSection>
+            <div>
+              <FaWhatsapp /> 079 266 9298
+            </div>
+            <div>
+              <FaPhone /> 010 970 1740
+            </div>
+          </ContactSection>
 
           <OrderButton onClick={toggleModal}>
-            <FaTruck />
-            Place an Order
+            <FaTruck /> Place an Order
           </OrderButton>
 
           {isModalOpen && (
@@ -264,7 +246,7 @@ const Home = () => {
               <ModalContent isClosing={isClosing}>
                 <FaTimes className="close-icon" onClick={closeModal} />
                 <h3>Place Your Order</h3>
-                <form ref={formRef} onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit}>
                   <input
                     type="text"
                     name="name"
