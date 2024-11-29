@@ -3,6 +3,26 @@ import styled, { keyframes } from "styled-components";
 import Modal from "react-modal";
 import { FaWhatsapp, FaPhone, FaTruck, FaTimes } from "react-icons/fa";
 import ProfileImg from "./HeroBgAnimation/Tshidiso.jpg";
+import emailjs from '@emailjs/browser';
+
+
+const sendEmail = (e) => {
+  e.preventDefault();
+
+  emailjs
+    .sendForm('service_7sqtgjw', 'template_txtj2xw', form.current, {
+      publicKey: '3kDrFtmUG1ZCLmM7t',
+    })
+    .then(
+      () => {
+        console.log('SUCCESS!');
+      },
+      (error) => {
+        console.log('FAILED...', error.text);
+      },
+    );
+};
+
 
 // Animations
 const fadeIn = keyframes`
@@ -96,7 +116,7 @@ const ContactSection = styled.div`
 `;
 
 const OrderButton = styled.button`
-  margin-top: 60px;
+  margin-top: 40px;
   padding: 15px 30px;
   font-size: 1.2rem;
   color: #fff;
@@ -292,7 +312,7 @@ const Home = () => {
                     placeholder="Drop Address"
                     required
                   />
-                  <OrderButton type="submit">
+                  <OrderButton type="submit" onSubmit={sendEmail}>
                     <FaTruck /> Submit
                   </OrderButton>
                 </form>
