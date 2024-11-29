@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled, { keyframes } from "styled-components";
 import Modal from "react-modal";
 import { FaWhatsapp, FaPhone, FaTruck, FaTimes } from "react-icons/fa";
@@ -6,22 +6,29 @@ import ProfileImg from "./HeroBgAnimation/Tshidiso.jpg";
 import emailjs from '@emailjs/browser';
 
 
-const sendEmail = (e) => {
-  e.preventDefault();
+// const sendEmail = (e) => {
+//   e.preventDefault();
 
-  emailjs
-    .sendForm('service_7sqtgjw', 'template_txtj2xw', form.current, {
-      publicKey: '3kDrFtmUG1ZCLmM7t',
-    })
-    .then(
-      () => {
-        console.log('SUCCESS!');
-      },
-      (error) => {
-        console.log('FAILED...', error.text);
-      },
-    );
-};
+//   emailjs
+//     .sendForm('service_7sqtgjw', 'template_txtj2xw', form.current, {
+//       publicKey: '3kDrFtmUG1ZCLmM7t',
+//     })
+//     .then(
+//       () => {
+//         console.log('SUCCESS!');
+//       },
+//       (error) => {
+//         console.log('FAILED...', error.text);
+//       },
+//     );
+// };
+
+
+
+
+
+
+
 
 
 // Animations
@@ -197,16 +204,42 @@ const ModalContent = styled.div`
 
 // Component
 const Home = () => {
+
+  const formRef = useRef(null); // Create a reference for the form
+
   const [showContent, setShowContent] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
-  const [form, setForm] = useState({
+  const [form, setForm] = React.useState({
     name: "",
     email: "",
     mobile: "",
     pickupAddress: "",
     dropAddress: "",
   });
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs
+      .sendForm(
+        "service_4nlbakc", // Replace with your EmailJS service ID
+        "template_txtj2xw", // Replace with your EmailJS template ID
+        formRef.current, // Reference the form element
+        "3kDrFtmUG1ZCLmM7t" // Replace with your EmailJS public key
+      )
+      .then(
+        (result) => {
+          console.log("SUCCESS:", result.text);
+          alert("Email sent successfully!");
+          closeModal();
+        },
+        (error) => {
+          console.error("FAILED...", error);
+          alert("Failed to send email. Please try again.");
+        }
+      );
+  };
 
   useEffect(() => {
     // Delay showing main content
@@ -220,8 +253,12 @@ const Home = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
+    setForm((prevForm) => ({
+      ...prevForm,
+      [name]: value,
+    }));
   };
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -268,56 +305,56 @@ const Home = () => {
 
           {isModalOpen && (
             <ModalOverlay>
-              <ModalContent isClosing={isClosing}>
-                <FaTimes className="close-icon" onClick={closeModal} />
-                <h3>Place Your Order</h3>
-                <form onSubmit={handleSubmit}>
-                  <input
-                    type="text"
-                    name="name"
-                    value={form.name}
-                    onChange={handleChange}
-                    placeholder="Your Name"
-                    required
-                  />
-                  <input
-                    type="email"
-                    name="email"
-                    value={form.email}
-                    onChange={handleChange}
-                    placeholder="Your Email"
-                    required
-                  />
-                  <input
-                    type="text"
-                    name="mobile"
-                    value={form.mobile}
-                    onChange={handleChange}
-                    placeholder="Your Mobile Number"
-                    required
-                  />
-                  <input
-                    type="text"
-                    name="pickupAddress"
-                    value={form.pickupAddress}
-                    onChange={handleChange}
-                    placeholder="Pick-up Address"
-                    required
-                  />
-                  <input
-                    type="text"
-                    name="dropAddress"
-                    value={form.dropAddress}
-                    onChange={handleChange}
-                    placeholder="Drop Address"
-                    required
-                  />
-                  <OrderButton type="submit" onSubmit={sendEmail}>
-                    <FaTruck /> Submit
-                  </OrderButton>
-                </form>
-              </ModalContent>
-            </ModalOverlay>
+            <ModalContent>
+              <form ref={formRef} onSubmit={sendEmail}>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Your Name"
+                  value={form.name}
+                  onChange={handleChange}
+                  required
+                />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Your Email"
+                  value={form.email}
+                  onChange={handleChange}
+                  required
+                />
+                <input
+                  type="text"
+                  name="mobile"
+                  placeholder="Your Mobile"
+                  value={form.mobile}
+                  onChange={handleChange}
+                  required
+                />
+                <input
+                  type="text"
+                  name="pickupAddress"
+                  placeholder="Pickup Address"
+                  value={form.pickupAddress}
+                  onChange={handleChange}
+                  required
+                />
+                <input
+                  type="text"
+                  name="dropAddress"
+                  placeholder="Drop Address"
+                  value={form.dropAddress}
+                  onChange={handleChange}
+                  required
+                />
+                {/* <button type="submit">Send Email</button> */}
+                <OrderButton type="submit">
+            <FaTruck /> Submit
+          </OrderButton>
+
+              </form>
+            </ModalContent>
+          </ModalOverlay>
           )}
         </>
       )}
