@@ -3,22 +3,6 @@ import {
   backend,
   creator,
   web,
-  javascript,
-  typescript,
-  html,
-  css,
-  reactjs,
-  redux,
-  tailwind,
-  nodejs,
-  mongodb,
-  git,
-  figma,
-  docker,
-  meta,
-  starbucks,
-  tesla,
-  shopify,
   carrent,
   jobit,
   tripguide,
@@ -31,14 +15,15 @@ import {
 import { FaHome, FaInfo, FaServicestack, FaBriefcase } from "react-icons/fa";
 import React from "react";
 
+import { FaTruck, FaShippingFast, FaShieldAlt, FaSmile } from "react-icons/fa"; // Icons for replacements
 
-// Function-based icons to avoid JSX syntax in plain JavaScript
-const FaHomeIcon = () => React.createElement(FaHome, { className: "text-black mr-2" });
+// Function-based icons to apply color styles
+const FaHomeIcon = () => React.createElement(FaHome, { className: "text-blue-600 mr-2" }); // Adjust color as needed
 const FaServicestackIcon = () =>
-  React.createElement(FaServicestack, { className: "text-black mr-2" });
+  React.createElement(FaServicestack, { className: "text-green-600 mr-2" });
 const FaBriefcaseIcon = () =>
-  React.createElement(FaBriefcase, { className: "text-black mr-2" });
-const FaInfoIcon = () => React.createElement(FaInfo, { className: "text-black mr-2" });
+  React.createElement(FaBriefcase, { className: "text-red-600 mr-2" });
+const FaInfoIcon = () => React.createElement(FaInfo, { className: "text-yellow-500 mr-2" });
 
 export const navLinks = [
   {
@@ -69,7 +54,7 @@ const services = [
     icon: web,
   },
   {
-    title: "IBM WebPhere Message Broker ",
+    title: "IBM WebPhere Message Broker",
     icon: mobile,
   },
   {
@@ -85,7 +70,7 @@ const services = [
     icon: creator,
   },
   {
-    title: "Oracle Java SE  6 Programming",
+    title: "Oracle Java SE 6 Programming",
     icon: creator,
   },
 ];
@@ -94,7 +79,7 @@ const experiences = [
   {
     title: "TMOF COURIERS",
     company_name: "Door-to-Door",
-    icon: starbucks,
+    icon: FaTruck,
     iconBg: "#383E56",
     points: [
       "TMOF COURIERS, established by Tshidiso Mofokeng",
@@ -105,7 +90,7 @@ const experiences = [
   {
     title: "Reliable Delivery",
     company_name: "Deliver",
-    icon: tesla,
+    icon: FaShippingFast,
     iconBg: "#E6DEDD",
     points: [
       "Legitimate registered and licensed",
@@ -116,7 +101,7 @@ const experiences = [
   {
     title: "Customer satisfaction",
     company_name: "Shopify",
-    icon: shopify,
+    icon: FaShieldAlt,
     iconBg: "#383E56",
     points: [
       "The commitment to customer satisfaction",
@@ -127,7 +112,7 @@ const experiences = [
   {
     title: "Express Delivery Service",
     company_name: "Meta",
-    icon: meta,
+    icon: FaSmile,
     iconBg: "#E6DEDD",
     points: ["Fast Delivery", "Arrives safely", "Handled with care"],
   },

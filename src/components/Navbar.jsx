@@ -42,7 +42,7 @@ const Navbar = () => {
                 className="hover:text-red-600 flex items-center gap-2"
                 onClick={() => setToggle(false)}
               >
-                <span className="text-black">{nav.icon}</span>
+                <span style={{ color: nav.color }}>{nav.icon}</span>
                 {nav.title}
               </Link>
             </li>
@@ -78,7 +78,7 @@ const Navbar = () => {
                   className="hover:text-black flex items-center gap-2"
                   onClick={() => setToggle(false)}
                 >
-                  <span className="text-black">{nav.icon}</span>
+                  <span style={{ color: nav.color }}>{nav.icon}</span>
                   {nav.title}
                 </Link>
               </li>
@@ -97,10 +97,10 @@ const Navbar = () => {
 
 export default Navbar;
 
-// Navigation links with icons
+// Navigation links with colored icons
 const navLinks = [
-  { id: "hero", title: "Home", path: "/", icon: <FaHome /> },
-  { id: "services", title: "Our Service", path: "/services", icon: <FaTools /> },
-  { id: "work", title: "Our Work", path: "/work", icon: <FaBriefcase /> },
-  { id: "about", title: "About Us", path: "/about", icon: <FaInfoCircle /> },
+  { id: "hero", title: "Home", path: "/", icon: <FaHome />, color: "#1877F2" }, // Blue
+  { id: "services", title: "Our Service", path: "/services", icon: <FaTools />, color: "#F39C12" }, // Orange
+  { id: "work", title: "Our Work", path: "/work", icon: <FaBriefcase />, color: "#2ECC71" }, // Green
+  { id: "about", title: "About Us", path: "/about", icon: <FaInfoCircle />, color: "#bd048b" }, // Red
 ];

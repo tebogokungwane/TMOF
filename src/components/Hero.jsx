@@ -42,7 +42,7 @@ const Header = styled.h1`
   font-weight: bold;
   color: #000;
   text-transform: uppercase;
-  margin-top: 80px;
+  margin-top: -40px;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   animation: ${fadeIn} 1.5s ease-out;
 
@@ -110,13 +110,14 @@ const ModalOverlay = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  right: 0;
+  bottom: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
+  background: rgba(0, 0, 0, 0.5);  // Semi-transparent dark background
+  backdrop-filter: blur(10px);  // Apply blur to the background content
+  z-index: 9999;  // Ensure it's above other content
 `;
 
 const ModalContent = styled.div`
@@ -239,7 +240,7 @@ const Home = () => {
 
   return (
     <HomeContainer>
-      <Header>SAME DAY DELIVERY</Header>
+      <Header>Tshidiso</Header>
       <SubHeader>We deliver parcels with speed and care</SubHeader>
 
       {!showContent && (

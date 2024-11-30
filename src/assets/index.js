@@ -1,3 +1,4 @@
+// Logo and general assets
 import logo from "./logo.svg";
 import backend from "./backend.png";
 import creator from "./creator.png";
@@ -7,6 +8,7 @@ import github from "./TMOF.jpg";
 import menu from "./menu.svg";
 import close from "./close.svg";
 
+// Technology assets
 import css from "./tech/css.png";
 import docker from "./tech/docker.png";
 import figma from "./tech/figma.png";
@@ -21,27 +23,19 @@ import tailwind from "./tech/tailwind.png";
 import typescript from "./tech/typescript.png";
 import threejs from "./tech/threejs.svg";
 
-import meta from "./company/meta.png";
-import shopify from "./company/shopify.png";
-import starbucks from "./company/starbucks.png";
-import tesla from "./company/tesla.jpg";
+// Service or feature-specific images
 import carrent from "./carrent.png";
 import jobit from "./jobit.png";
 import tripguide from "./tripguide.png";
-import normalD from "./service1.jpg"
+import normalD from "./service1.jpg";
+import same from "./service1.jpg";
+import normal from "./service7.jpg";
+import errand from "./service5.jpg";
 
+// Importing React icons
+import { FaTruck, FaShippingFast, FaShieldAlt, FaSmile } from "react-icons/fa"; // Icons for replacements
 
-
-// import same from "./sameDay.png";
-// import normal from "./normal.png";
-// import errand from "./errand.png"
-
-import same  from   "./service1.jpg";
-import normal from  "./service7.jpg"
-import errand from  "./service5.jpg"
-
-
-
+// Exporting everything
 export {
   logo,
   backend,
@@ -64,22 +58,16 @@ export {
   tailwind,
   typescript,
   threejs,
-  meta,
-  shopify,
-  starbucks,
-  tesla,
   carrent,
   jobit,
   tripguide,
   normalD,
-
-
   same,
   normal,
   errand,
-
-  // service1,
-  // service3,
-  // service4
-
+  // Replacing company images with icons
+  FaTruck as courierIcon, // Replaces "meta"
+  FaShippingFast as deliveryIcon, // Replaces "shopify"
+  FaShieldAlt as reliabilityIcon, // Replaces "starbucks"
+  FaSmile as satisfactionIcon, // Replaces "tesla"
 };
