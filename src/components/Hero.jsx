@@ -224,7 +224,18 @@ const Home = () => {
 
   useEffect(() => {
     Modal.setAppElement("#root");
-  }, []);
+
+    // Disable background scrolling when modal is open
+    if (isModalOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto"; // Reset the overflow when component unmounts
+    };
+  }, [isModalOpen]);
 
   return (
     <HomeContainer>
@@ -284,7 +295,7 @@ const Home = () => {
                   <input
                     type="text"
                     name="dropAddress"
-                    placeholder="Drop Address"
+                    placeholder="Drop-off Address"
                     value={form.dropAddress}
                     onChange={handleChange}
                     required
