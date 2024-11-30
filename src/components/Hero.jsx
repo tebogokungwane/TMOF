@@ -1,35 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled, { keyframes } from "styled-components";
 import Modal from "react-modal";
-import { FaWhatsapp, FaPhone, FaTruck, FaTimes } from "react-icons/fa";
+import { FaWhatsapp, FaPaperPlane, FaTruck, FaTimes } from "react-icons/fa";
 import ProfileImg from "./HeroBgAnimation/Tshidiso.jpg";
-import emailjs from '@emailjs/browser';
-
-
-// const sendEmail = (e) => {
-//   e.preventDefault();
-
-//   emailjs
-//     .sendForm('service_7sqtgjw', 'template_txtj2xw', form.current, {
-//       publicKey: '3kDrFtmUG1ZCLmM7t',
-//     })
-//     .then(
-//       () => {
-//         console.log('SUCCESS!');
-//       },
-//       (error) => {
-//         console.log('FAILED...', error.text);
-//       },
-//     );
-// };
-
-
-
-
-
-
-
-
+import emailjs from "@emailjs/browser";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; // Import react-toastify styles
 
 // Animations
 const fadeIn = keyframes`
@@ -54,32 +30,36 @@ const HomeContainer = styled.div`
   justify-content: flex-start;
   overflow: hidden;
   position: relative;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+    padding: 0 10px;
+  }
 `;
 
 const Header = styled.h1`
-  font-size: 2.5rem; /* Adjust font size as needed */
+  font-size: 2.5rem;
   font-weight: bold;
-  color: #000; /* Black color for the text */
-  text-transform: uppercase; /* Convert text to uppercase */
-  margin-top: 80px; /* Adjust the margin for spacing */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Optional shadow effect */
+  color: #000;
+  text-transform: uppercase;
+  margin-top: 80px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   animation: ${fadeIn} 1.5s ease-out;
 
   @media (max-width: 768px) {
-    font-size: 1.8rem; /* Adjust font size for smaller screens */
+    font-size: 1.8rem;
   }
 `;
 
 const SubHeader = styled.h2`
-  font-size: 1.2rem; /* Optional: Keep the subheading in sync */
-  color: #666; /* Lighter color for a subtle contrast */
+  font-size: 1.2rem;
+  color: #666;
   animation: ${fadeIn} 1.5s ease-out 0.5s;
 
   @media (max-width: 768px) {
     font-size: 1rem;
   }
 `;
-
 
 const BackgroundText = styled.div`
   position: absolute;
@@ -102,23 +82,6 @@ const ProfileImage = styled.div`
     border: 5px solid #fcd403;
     border-radius: 15px;
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
-  }
-`;
-
-const ContactSection = styled.div`
-  margin-top: 20px;
-  animation: ${fadeIn} 1.5s ease-out;
-
-  div {
-    display: flex;
-    align-items: center;
-    margin: 10px 0;
-    font-size: 1.2rem;
-
-    svg {
-      margin-right: 10px;
-      color: #25d366;
-    }
   }
 `;
 
@@ -153,6 +116,7 @@ const ModalOverlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 `;
 
 const ModalContent = styled.div`
@@ -163,6 +127,11 @@ const ModalContent = styled.div`
   padding: 20px;
   position: relative;
   animation: ${(props) => (props.isClosing ? scaleOut : fadeIn)} 0.3s ease-out;
+
+  @media (max-width: 768px) {
+    width: 95%;
+    padding: 10px;
+  }
 
   h3 {
     text-align: center;
@@ -202,15 +171,12 @@ const ModalContent = styled.div`
   }
 `;
 
-// Component
 const Home = () => {
-
-  const formRef = useRef(null); // Create a reference for the form
-
+  const formRef = useRef(null);
   const [showContent, setShowContent] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
-  const [form, setForm] = React.useState({
+  const [form, setForm] = useState({
     name: "",
     email: "",
     mobile: "",
@@ -218,55 +184,31 @@ const Home = () => {
     dropAddress: "",
   });
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm((prevForm) => ({ ...prevForm, [name]: value }));
+  };
+
   const sendEmail = (e) => {
     e.preventDefault();
-
     emailjs
       .sendForm(
-        "service_4nlbakc", // Replace with your EmailJS service ID
-        "template_txtj2xw", // Replace with your EmailJS template ID
-        formRef.current, // Reference the form element
-        "3kDrFtmUG1ZCLmM7t" // Replace with your EmailJS public key
+        "service_4nlbakc",
+        "template_txtj2xw",
+        formRef.current,
+        "3kDrFtmUG1ZCLmM7t"
       )
       .then(
         (result) => {
-          console.log("SUCCESS:", result.text);
-          alert("Email sent successfully!");
+          toast.success("Email sent successfully!");
           closeModal();
         },
         (error) => {
-          console.error("FAILED...", error);
-          alert("Failed to send email. Please try again.");
+          toast.error("Failed to send email. Please try again.");
         }
       );
   };
 
-  useEffect(() => {
-    // Delay showing main content
-    const timer = setTimeout(() => setShowContent(true), 3000);
-    return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
-    Modal.setAppElement("#root");
-  }, []);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm((prevForm) => ({
-      ...prevForm,
-      [name]: value,
-    }));
-  };
-
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Form submitted:", form);
-    closeModal();
-  };
-
-  const toggleModal = () => setIsModalOpen(true);
   const closeModal = () => {
     setIsClosing(true);
     setTimeout(() => {
@@ -274,6 +216,15 @@ const Home = () => {
       setIsClosing(false);
     }, 300);
   };
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowContent(true), 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    Modal.setAppElement("#root");
+  }, []);
 
   return (
     <HomeContainer>
@@ -289,75 +240,65 @@ const Home = () => {
           <ProfileImage>
             <img src={ProfileImg} alt="Profile" />
           </ProfileImage>
-
-          {/* <ContactSection>
-            <div>
-              <FaWhatsapp /> 079 266 9298
-            </div>
-            <div>
-              <FaPhone /> 010 970 1740
-            </div>
-          </ContactSection> */}
-
-          <OrderButton onClick={toggleModal}>
+          <OrderButton onClick={() => setIsModalOpen(true)}>
             <FaTruck /> Place an Order
           </OrderButton>
-
           {isModalOpen && (
             <ModalOverlay>
-            <ModalContent>
-              <form ref={formRef} onSubmit={sendEmail}>
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Your Name"
-                  value={form.name}
-                  onChange={handleChange}
-                  required
-                />
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Your Email"
-                  value={form.email}
-                  onChange={handleChange}
-                  required
-                />
-                <input
-                  type="text"
-                  name="mobile"
-                  placeholder="Your Mobile"
-                  value={form.mobile}
-                  onChange={handleChange}
-                  required
-                />
-                <input
-                  type="text"
-                  name="pickupAddress"
-                  placeholder="Pickup Address"
-                  value={form.pickupAddress}
-                  onChange={handleChange}
-                  required
-                />
-                <input
-                  type="text"
-                  name="dropAddress"
-                  placeholder="Drop Address"
-                  value={form.dropAddress}
-                  onChange={handleChange}
-                  required
-                />
-                {/* <button type="submit">Send Email</button> */}
-                <OrderButton type="submit">
-            <FaTruck /> Submit
-          </OrderButton>
-
-              </form>
-            </ModalContent>
-          </ModalOverlay>
+              <ModalContent isClosing={isClosing}>
+                <FaTimes className="close-icon" onClick={closeModal} />
+                <h3>Place Your Order</h3>
+                <form ref={formRef} onSubmit={sendEmail}>
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Your Name"
+                    value={form.name}
+                    onChange={handleChange}
+                    required
+                  />
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Your Email"
+                    value={form.email}
+                    onChange={handleChange}
+                    required
+                  />
+                  <input
+                    type="text"
+                    name="mobile"
+                    placeholder="Your Mobile"
+                    value={form.mobile}
+                    onChange={handleChange}
+                    required
+                  />
+                  <input
+                    type="text"
+                    name="pickupAddress"
+                    placeholder="Pickup Address"
+                    value={form.pickupAddress}
+                    onChange={handleChange}
+                    required
+                  />
+                  <input
+                    type="text"
+                    name="dropAddress"
+                    placeholder="Drop Address"
+                    value={form.dropAddress}
+                    onChange={handleChange}
+                    required
+                  />
+                  <OrderButton type="submit">
+                    <FaPaperPlane /> Submit
+                  </OrderButton>
+                </form>
+              </ModalContent>
+            </ModalOverlay>
           )}
         </>
       )}
+      <ToastContainer />
     </HomeContainer>
   );
 };
